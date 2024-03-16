@@ -12,8 +12,8 @@
 </head>
 <body>	  
 <!-- INSERTANDO EL SCRIPT DEL PHP-->
-<?  
- /*      $Codigo=$_POST['Codigo'];
+<?php  
+      $Codigo=$_POST['Codigo'];
       $Asignatura=$_POST['Asignatura'];
       $Facultad=$_POST['Facultad'];
       $Horas_Teoricas=$_POST['Horas_Teoricas'];
@@ -21,14 +21,21 @@
       $Activo=$_POST['Activo'];
 
       //Conexión con la base
-      $con=mysql_connect("127.0.0.1","root","root"); 
-
+	  $connection = new mysqli("127.0.0.1", "root", "", "db_notas", 3306);
+	  $query ="INSERT INTO `asignaturas` (Codigo,Asignaturas,Facultad,Horas_Teoricas,Horas_Practicas,Activo) values ('$Codigo','$Asignatura','$Facultad',$Horas_Teoricas,$Horas_Practicas,'$Activo')";
       //selección de la base de datos con la que vamos a trabajar 
-      mysql_select_db("DB_NOTA",$con); 
+	  $result = $connection->query($query);
+	  $message = "";
+	  if($result == true){
+		$message = "<h3>La Asignatura Se Registro <br>Sastifactoriamente...!</h3>";
+	  }
+	  else{
+		$message = "<h3>La Asignatura No Se Registro <br>Intente Nuevamente!</h3>";
+	  }
+    
 
-      //Ejecucion de la sentencia SQL
-      mysql_query("insert into asignaturas (Codigo,Asignatura,Facultad,Horas_Teoricas,Horas_Practicas,Activo) values ('$Codigo','$Asignatura','$Facultad',$Horas_Teoricas,$Horas_Practicas,'$Activo')",$con);
-	   */
+
+	   
 ?>
 <!-- FIN DEL SCRIPT DEL PHP-->
 
@@ -110,7 +117,7 @@
 <section class="container">
   <div class="row">
 		<div class="col-md-8 col-md-offset-2 text-center">
-		<h3>La Asignatura Se Registro <br>Sastifactoriamente...!</h3>
+		<?php echo $message;?>
  	  </div>	
 	</div>  
 </section>

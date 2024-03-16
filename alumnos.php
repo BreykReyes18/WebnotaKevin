@@ -14,7 +14,7 @@
 <!-- INSERTANDO EL SCRIPT DEL PHP-->
 <?php
     
-   /*  //Declarando variables y asignando valores
+   //Declarando variables y asignando valores
     $No_Carnet=$_POST['No_Carnet'];
     $Nombre_Completo=$_POST['Nombre_Completo'];
     $Cedula=$_POST['Cedula'];
@@ -26,14 +26,19 @@
     $Activo=$_POST['Activo'];
 
     //Conexión con el servidor
-    $con=mysql_connect("127.0.0.1","root","root"); 
+	$connection = new mysqli("127.0.0.1", "root", "", "db_notas", 3306);
+	$query ="INSERT INTO `alumnos` (No_Carnet,Nombre_Completo,Cedula,Direccion,Telefono,Carrera,Turno,Cursa,Activo) values ('$No_Carnet','$Nombre_Completo','$Cedula','$Direccion','$Telefono','$Carrera','$Turno','$Cursa','$Activo')";
+	$result = $connection->query($query);
 
+	$message = "";
+	  if($result == true){
+		$message = "<h3>La Asignatura Se Registro <br>Sastifactoriamente...!</h3>";
+	  }
+	  else{
+		$message = "<h3>La Asignatura No Se Registro <br>Intente Nuevamente!</h3>";
+	  }
     //selección de la base de datos con la que vamos a trabajar 
-    mysql_select_db("DB_NOTA",$con); 
-
-    //Ejecucion de la sentencia SQL
-    mysql_query("insert into alumnos (No_Carnet,Nombre_Completo,Cedula,Direccion,Telefono,Carrera,Turno,Cursa,Activo) values ('$No_Carnet','$Nombre_Completo','$Cedula','$Direccion','$Telefono','$Carrera','$Turno','$Cursa','$Activo')",$con);
-  */
+  
 ?>
 
 
@@ -113,8 +118,7 @@
 <section class="container">
   <div class="row">
 		<div class="col-md-8 col-md-offset-2 text-center">
-		<h3>Los datos del Alumno se han registrado</h3>
-		<h3>Sastifactoriamente...!</h3>
+		<?php echo $message;?>
  	  </div>	
 	</div>  
 </section>
